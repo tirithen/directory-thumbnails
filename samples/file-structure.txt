@@ -1,0 +1,28 @@
+https://rix0r.nl/blog/2015/08/13/cmake-guide/
+
+/
+    build/                      <-- out-of-source build
+    src/
+        CMakeLists.txt
+        liblib/
+            CMakeLists.txt
+            include/
+                liblib/
+                    lib.h
+            src/
+                lib.cpp
+                frob.cpp
+            test/
+                testlib.cpp
+        app/
+            CMakeLists.txt
+            src/
+                app.cpp
+                quux.cpp
+            test/
+                testapp.cpp
+        libs/
+            (buildable 3rd party libs that you want to vend for convenience)
+            extlib/
+                CMakeLists.txt
+                ...
