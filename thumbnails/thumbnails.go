@@ -6,6 +6,7 @@ import (
 	"log"
 	"os/exec"
 	"regexp"
+	"strings"
 )
 
 var thumbnailPathRegexp = regexp.MustCompile("thumbnail::path:\\s*(.+)\\s*")
@@ -31,10 +32,14 @@ func GetForDirectory(path string, count int) []string {
 				log.Fatal(err)
 			}
 
-			thumbnailPath := thumbnailPathRegexp.FindString(output.String())
-			thumbnailPaths = append(thumbnailPaths, thumbnailPath)
-			if len(thumbnailPaths) >= count {
-				break
+			outputWithoutNewline := strings.Replace(output.String(), "\n", " ", -1)
+			thumbnailMatch := thumbnailPathRegexp.FindStringSubmatch(outputWithoutNewline)
+
+			if len(thumbnailMatch) > 1 {
+				thumbnailPaths = append(thumbnailPaths, thumbnailMatch[1])
+				if len(thumbnailPaths) >= count {
+					break
+				}
 			}
 		}
 	}
